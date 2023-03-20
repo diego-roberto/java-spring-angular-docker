@@ -11,7 +11,7 @@ import { UtilValidators } from 'src/app/shared/util/validators.util';
 @Component({
   selector: 'app-empresa',
   templateUrl:'./empresa.component.html',
-  styleUrls: ['./empresa.component.css'],
+  styleUrls: ['./empresa.component.scss'],
   providers: [EmpresaService]
 })
 

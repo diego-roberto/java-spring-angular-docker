@@ -1,0 +1,35 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+.card {
+  display: flex;
+}
+
+.card-header {
+  margin-bottom: 30px;
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.form-control {
+  display: flex;
+  justify-content: flex-start;  
+}
+
+.form-group-button {
+  display: flex;
+  justify-content: flex-end;
+}
