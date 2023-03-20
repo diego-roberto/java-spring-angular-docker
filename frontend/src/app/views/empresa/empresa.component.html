@@ -1,0 +1,101 @@
+<div class="container">
+
+  <div class="card">
+    <div class="card-header">
+      <h4>Cadastro de Empresa</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="save()" class="form">
+        
+        <div class="form-group">
+          <label for="razaoSocial">Razão Social:</label>
+          <input type="text" formControlName="razaoSocial" id="razaoSocial" class="form-control">
+          <mat-error *ngIf="form.controls['razaoSocial'].hasError('required')">
+            Razão Social é obrigatório
+          </mat-error>
+          <mat-error *ngIf="form.controls['razaoSocial'].hasError('minlength')">
+            Razão Social deve ter pelo menos 3 caracteres
+          </mat-error>
+          <mat-error *ngIf="form.controls['razaoSocial'].hasError('maxlength')">
+            Razão Social deve ter no máximo 50 caracteres
+          </mat-error>
+        </div>
+        
+        <div class="form-group">
+          <label for="cnpj">CNPJ:</label>
+          <input type="text" formControlName="cnpj" id="cnpj" class="form-control" [textMask]="{mask: cnpjMask}">
+          <mat-error *ngIf="form.controls['cnpj'].hasError('required')">
+            CNPJ é obrigatório
+          </mat-error>
+          <mat-error *ngIf="form.controls['cnpj'].hasError('invalidCnpj')">
+            CNPJ inválido
+          </mat-error>
+        </div>
+        
+        <div class="form-group">
+          <label for="endereco">Endereço:</label>
+          <input type="text" formControlName="endereco" id="endereco" class="form-control">
+          <mat-error *ngIf="form.controls['endereco'].hasError('required')">
+            Endereço é obrigatório
+          </mat-error>
+        </div>
+
+        <div class="form-group">
+          <label for="ramoNegocio">Ramo de negócio:</label>
+          <mat-select formControlName="ramoNegocio">
+            <mat-option *ngFor="let ramo of ramosNegocio" [value]="ramo.id">{{ ramo.descricao }}</mat-option>
+          </mat-select>
+        </div>      
+      
+        <div class="form-group">
+          <button mat-raised-button color="primary" [disabled]="form.invalid" type="submit">
+            Salvar
+          </button>
+        </div>
+      </form>
+          
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+      <mat-table class="table table-striped" [dataSource]="empresas">
+        <ng-container matColumnDef="razaoSocial">
+          <mat-header-cell *matHeaderCellDef>Razão Social</mat-header-cell>
+          <mat-cell *matCellDef="let empresa">{{ empresa.razaoSocial }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="cnpj">
+          <mat-header-cell *matHeaderCellDef>CNPJ</mat-header-cell>
+          <mat-cell *matCellDef="let empresa">{{ empresa.cnpj }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="endereco">
+          <mat-header-cell *matHeaderCellDef>Endereço</mat-header-cell>
+          <mat-cell *matCellDef="let empresa">{{ empresa.endereco }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ramo">
+          <mat-header-cell *matHeaderCellDef>Ramo de negócio</mat-header-cell>
+          <mat-cell *matCellDef="let empresa">{{ empresa.ramoNegocio.descricao }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="acoes">
+          <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+          <mat-cell *matCellDef="let empresa">
+            <button class="btn btn-primary" [routerLink]="['/empresa', empresa.id, 'editar']">Editar</button>
+            <button class="btn btn-danger" (click)="removerEmpresa(empresa)">Remover</button>
+          </mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="['razaoSocial', 'cnpj', 'endereco', 'ramo', 'acoes']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['razaoSocial', 'cnpj', 'endereco', 'ramo', 'acoes']"></mat-row>
+      </mat-table>
+      
+      <!-- <div *ngIf="!empresas.length" class="alert alert-info">
+        Nenhuma empresa encontrada.
+      </div> -->
+    </div>
+  </div>
+
+</div>
