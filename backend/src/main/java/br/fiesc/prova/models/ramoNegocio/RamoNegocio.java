@@ -29,9 +29,6 @@ public class RamoNegocio implements Serializable {
 	@Unique
 	private Descricao descricao;
 
-	@OneToMany(mappedBy = "ramoNegocio")
-	private Set<Empresa> empresas;
-
 	public RamoNegocio(Descricao descricao) {
 		this.descricao = descricao;
 	}
