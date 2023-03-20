@@ -16,7 +16,7 @@ import { EmpresaModule } from '../empresa/empresa.module';
     RouterModule,
     SharedModule,
     EmpresaModule,
-    EmpresaRoutingModule
+    EmpresaRoutingModule,
   ],
   exports: [
   ]
