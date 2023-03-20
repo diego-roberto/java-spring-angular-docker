@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from './util/dialog/confirmation-dialog.c
 import { TextMaskModule } from 'angular2-text-mask';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule,
     TextMaskModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule
   ],
   exports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule,
     TextMaskModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule
   ]
 })
 export class SharedModule { }

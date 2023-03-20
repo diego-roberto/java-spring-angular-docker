@@ -56,27 +56,27 @@
       <mat-table class="table table-striped" [dataSource]="empresas">
         <ng-container matColumnDef="razaoSocial">
           <mat-header-cell *matHeaderCellDef>Razão Social</mat-header-cell>
-          <mat-cell *matCellDef="let empresa">{{ empresa.razaoSocial }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresa.razaoSocial }}</mat-cell>
         </ng-container>
       
         <ng-container matColumnDef="cnpj">
           <mat-header-cell *matHeaderCellDef>CNPJ</mat-header-cell>
-          <mat-cell *matCellDef="let empresa">{{ empresa.cnpj }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresa.cnpj }}</mat-cell>
         </ng-container>
       
         <ng-container matColumnDef="endereco">
           <mat-header-cell *matHeaderCellDef>Endereço</mat-header-cell>
-          <mat-cell *matCellDef="let empresa">{{ empresa.endereco }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresa.endereco }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="ramo">
           <mat-header-cell *matHeaderCellDef>Ramo de negócio</mat-header-cell>
-          <mat-cell *matCellDef="let empresa">{{ empresa.ramoNegocio.descricao }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresa.ramoNegocio.descricao }}</mat-cell>
         </ng-container>
       
         <ng-container matColumnDef="acoes">
           <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
-          <mat-cell *matCellDef="let empresa">
+          <mat-cell *matCellDef="let empresas">
             <button class="btn btn-primary" [routerLink]="['/empresa', empresa.id, 'editar']">Editar</button>
             <button class="btn btn-danger" (click)="removerEmpresa(empresa)">Remover</button>
           </mat-cell>
