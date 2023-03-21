@@ -8,17 +8,12 @@ import { DashboardComponent } from './dashboard.component';
 import { EmpresaModule } from '../empresa/empresa.module';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-  ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
     EmpresaModule,
     EmpresaRoutingModule,
-  ],
-  exports: [
   ]
 })
 export class DashboardModule { }

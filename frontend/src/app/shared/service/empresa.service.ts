@@ -3,11 +3,13 @@ import { Empresa } from "src/app/shared/model/empresa.model";
 import { HttpClientService } from "./http-client.service";
 import { map } from 'rxjs/operators';
 import { RamoNegocio } from "../model/ramo-negocio.model";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class EmpresaService {  
 
   public empresa: Empresa = new Empresa;
+  public empresas: Empresa[] = new Array;
   private endpointEmpresa = '/empresas';
   
   constructor(private service: HttpClientService) { }
@@ -15,8 +17,8 @@ export class EmpresaService {
   getAllEmpresa() {
     return this.service.get(this.endpointEmpresa + '/findAll').pipe(
       map((jsonResponse: { empresa: any[]; }) => {
-        if (jsonResponse.empresa) {
-          return jsonResponse.empresa.map((jsonEmpresa: any) => {
+        if (Array.isArray(jsonResponse)) {
+          return jsonResponse.map((jsonEmpresa: any) => {
             return new Empresa().initializeWithJSON(jsonEmpresa);
           });
         } else {
@@ -27,12 +29,12 @@ export class EmpresaService {
   }
     
   getEmpresaById(id: number) {
-    return this.service.get(this.endpointEmpresa + '/id/' + id)
-      .pipe(map((response: Response) => {
-        const jsonResponse = response.json();
-        return new Empresa().initializeWithJSON(jsonResponse);
-      }));
-  }
+    return this.service.get(this.endpointEmpresa + '/id/' +id).pipe(
+        map((jsonResponse: any) => {
+          return new Empresa().initializeWithJSON(jsonResponse);
+        })
+      );
+  }  
     
   createEmpresa(empresa: Empresa) {
     return this.service.post(this.endpointEmpresa, empresa.toJSON()).pipe(
@@ -58,9 +60,9 @@ export class EmpresaService {
   getAllRamosNegocio() {
     return this.service.get(this.endpointEmpresa + '/findAllRamosNegocio').pipe(
       map((jsonResponse: { ramosNegocio: any[]; }) => {
-        if (jsonResponse.ramosNegocio) {
-          return jsonResponse.ramosNegocio.map((ramosNegocio: any) => {
-            return new RamoNegocio().initializeWithJSON(ramosNegocio);
+        if (Array.isArray(jsonResponse)) {
+          return jsonResponse.map((jsonRamosNegocio: any) => {
+            return new RamoNegocio().initializeWithJSON(jsonRamosNegocio);
           });
         } else {
           return [];
@@ -82,6 +84,17 @@ export class EmpresaService {
       })
     );
   }
+
+  getEmpresasByRamoNegocio() {
+    return this.service.get(this.endpointEmpresa + '/empresasPorRamoNegocio')
+      .pipe(
+        map((response: any) => {
+          return response.map((item: any) => {
+            return { ramoNegocio: item.ramoNegocio, quantidade: item.quantidade };
+          });
+        })
+      );
+  }  
   /* */
   
-}
+} 

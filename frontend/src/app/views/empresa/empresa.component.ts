@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Empresa } from 'src/app/shared/model/empresa.model';
 import { RamoNegocio } from 'src/app/shared/model/ramo-negocio.model';
@@ -20,8 +21,8 @@ export class EmpresaComponent implements OnInit{
   empresa: Empresa = new Empresa();
   empresas!: Empresa[];
   ramosNegocio!: RamoNegocio[];
+  selected!: any;
 
-  dialog: any;
   snackBar: any;
 
   form: FormGroup;
@@ -31,23 +32,25 @@ export class EmpresaComponent implements OnInit{
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
+    private dialog: MatDialog,
     private empresaService: EmpresaService
   ) {
     this.form = this.fb.group({
       razaoSocial: new FormControl('', [
         Validators.required,
-        UtilValidators.onlytext,
         Validators.minLength(3),
         Validators.maxLength(50)
       ]),
       cnpj: new FormControl('', [
         Validators.required,
         UtilValidators.cnpj,
-        Validators.minLength(11),
-        Validators.maxLength(11)
+        Validators.minLength(18),
+        Validators.maxLength(18)
       ]),
       endereco: new FormControl('', [
-        Validators.required
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)
       ]),
       ramoNegocio: new FormControl('')
     });
@@ -56,18 +59,19 @@ export class EmpresaComponent implements OnInit{
   ngOnInit() {
     this.getEmpresas();
     this.getRamosNegocio();
-
+    
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
         this.empresaService.getEmpresaById(id).subscribe((empresa: Empresa) => {
           this.empresa = empresa;
           this.form.patchValue({
-            name: empresa.razaoSocial,
+            razaoSocial: empresa.razaoSocial,
             cnpj: empresa.cnpj,
             endereco: empresa.endereco,
-            ramoNegocio: empresa.ramoNegocio
+            ramoNegocio: empresa.ramoNegocio.id
           });
+          
         });
       }
     });
@@ -75,24 +79,17 @@ export class EmpresaComponent implements OnInit{
   }
 
   getEmpresas() {
-    this.empresaService.getAllEmpresa().subscribe((empresas: Empresa[]) => {
-      this.empresas = empresas;
+    this.empresaService.getAllEmpresa().subscribe((result: Empresa[]) => {
+      this.empresas = result;
     });
   }
 
   getRamosNegocio() {
-    this.empresaService.getAllRamosNegocio().subscribe((ramosNegocio: RamoNegocio[]) => {
-      this.ramosNegocio = ramosNegocio;
+    this.empresaService.getAllRamosNegocio().subscribe((result: RamoNegocio[]) => {
+      this.ramosNegocio = result;
+      this.selected = this.ramosNegocio[0].id;
     });
 
-  }
-
-  removerEmpresa(empresa: Empresa): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: {
-        message: `Tem certeza que deseja remover ${empresa.razaoSocial}?`,
-      },
-    });
   }
 
   save() {
@@ -101,23 +98,49 @@ export class EmpresaComponent implements OnInit{
       return;
     }
 
-    this.empresa.razaoSocial = this.form.controls['name'].value.trim();
+    const selectedId = this.form.controls['ramoNegocio'].value;
+    const selectedRamoNegocio = this.ramosNegocio.find(ramo => ramo.id === selectedId);
+
+    this.empresa.razaoSocial = this.form.controls['razaoSocial'].value.trim();
     this.empresa.cnpj = this.form.controls['cnpj'].value.trim();
     this.empresa.endereco = this.form.controls['endereco'].value.trim();
-    this.empresa.ramoNegocio = this.form.controls['ramoNegocio'].value.trim();
+    
+    if (selectedRamoNegocio) {
+      if (!this.empresa.ramoNegocio) {
+        this.empresa.ramoNegocio = selectedRamoNegocio;
+      }
+      this.empresa.ramoNegocio.id = selectedId;
+      this.empresa.ramoNegocio.descricao = selectedRamoNegocio.descricao;
+    }
 
     const request = this.empresa.id
       ? this.empresaService.updateEmpresa(this.empresa)
       : this.empresaService.createEmpresa(this.empresa);
-
     request.subscribe(() => {
-      this.router.navigate(['/empresa']);
+      this.router.navigate(['/empresas']);
+      window.location.reload();
     });
   }
 
-  delete() {
-    this.empresaService.deleteEmpresa(this.empresa.id).subscribe(() => {
-      this.router.navigate(['/empresa']);
+  removerEmpresa(empresa: Empresa): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: `Tem certeza que deseja remover ${empresa.razaoSocial}?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(empresa.id);
+      }
+    });
+
+  }
+
+  delete(id: number) {
+    this.empresaService.deleteEmpresa(id).subscribe(() => {
+      this.router.navigate(['/empresas']);
+      window.location.reload();
     });
   }
 

@@ -1,25 +1,21 @@
 <div class="container">
 
-  <!--
-    <div class="card">
-  
-      <div class="card-body">          
-          <div class="form-group">            
-              <mat-label>Empresas Cadastradas:</mat-label>
-              <a>totalEmpresas</a>            
-          </div>
-      </div>      
+  <div class="dashboard-grid">
 
-      <div class="card-body">          
-        <div class="form-group">            
-            <mat-label>Empresas por Ramo de negócio:</mat-label>
-                  
-        </div>
+    <div class="dashboard-card card-1">
+      <h3>Empresas Cadastradas:</h3>
+      <p>{{ empresas.length || 0 }}</p>
+    </div>
+
+    <div class="dashboard-card card-2">
+      <h3>Empresas por Ramo de Negócio:</h3>
+      <ul>
+        <li *ngFor="let item of empresasPorRamoNegocio">
+          {{ item.ramoNegocio }}: {{ item.quantidade || 0}}
+        </li>
+      </ul>
     </div>
 
   </div>
--->
-
-<a>não deu tempo :(</a>
 
 </div>

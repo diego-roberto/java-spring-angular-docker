@@ -15,19 +15,16 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
+    EmpresaComponent,
+    DashboardComponent    
   ],
   imports: [
     SharedModule,
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forChild([
-      { path: 'empresas', component: EmpresaComponent, children: [
-      ]},
-      { path: 'dashboard', component: DashboardComponent, children: [
-      ]}
-    ])
   ],
   providers: [EmpresaService],
   bootstrap: [AppComponent],

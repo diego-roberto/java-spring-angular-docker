@@ -11,7 +11,7 @@ export interface ErrorDialogData {
   template: `
     <h1 mat-dialog-title>{{ data.title }}</h1>
     <div mat-dialog-content>{{ data.message }}</div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions style="display: flex; justify-content: center;">
       <button mat-button (click)="dialogRef.close()">Ok</button>
     </div>
   `,

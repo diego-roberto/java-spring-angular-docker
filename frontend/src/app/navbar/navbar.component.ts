@@ -3,24 +3,19 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  templateUrl:'./navbar.component.html',
+  templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-
 export class NavbarComponent {
-
-  menuItems = {
-    main: [
-      { route: '/dashboard', label: 'Dashboard' },
-      { route: '/empresas', label: 'Empresas' }
-    ]
-  }
+  menuItems = [
+    { route: '/dashboard', label: 'Dashboard' },
+    { route: '/empresas', label: 'Empresas' }
+  ];
 
   constructor(private router: Router) {}
 
-  goto(pageName: string) {
-    const pageUrl = `views/${pageName}`;
+  goto(pageUrl: string) {
     this.router.navigateByUrl(pageUrl);
-  }
-
+  }  
 }
+

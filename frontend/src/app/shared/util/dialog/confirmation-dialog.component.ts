@@ -11,9 +11,9 @@ export interface ConfirmationDialogData {
   template: `
     <h1 mat-dialog-title>{{ data.title }}</h1>
     <div mat-dialog-content>{{ data.message }}</div>
-    <div mat-dialog-actions>
-      <button mat-button (click)="dialogRef.close(true)">Confirm</button>
-      <button mat-button (click)="dialogRef.close(false)">Cancel</button>
+    <div mat-dialog-actions style="display: flex; justify-content: space-around;">
+      <button mat-button (click)="dialogRef.close(true)">Confirmar</button>
+      <button mat-button (click)="dialogRef.close(false)">Cancelar</button>
     </div>
   `,
 })

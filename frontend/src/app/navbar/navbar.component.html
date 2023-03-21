@@ -2,8 +2,16 @@
     
     <div class="tab-group">
         <mat-tab-group>
-            <mat-tab label="Dashboard" routerLink="/dashboard"></mat-tab>
-            <mat-tab label="Empresas" routerLink="/empresas"></mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <span (click)="goto('dashboard')">Dashboard</span>
+            </ng-template>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <span (click)="goto('empresas')">Empresas</span>
+            </ng-template>
+          </mat-tab>
         </mat-tab-group>
     </div>
 

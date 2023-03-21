@@ -8,7 +8,7 @@
 
     <div class="card-body">
       
-      <mat-form [formGroup]="form" (ngSubmit)="save()" class="form">
+      <mat-form [formGroup]="form" class="form">
         
         <div class="form-group">
           <mat-form-field [style.width.px]=330 appearance="fill">
@@ -34,14 +34,14 @@
         <div class="form-group">
           <mat-form-field [style.width.px]=200 appearance="fill">
           <mat-label for="ramoNegocio">Ramo de negócio:</mat-label>
-          <mat-select formControlName="ramoNegocio">
+          <mat-select formControlName="ramoNegocio" [(value)]="selected">
             <mat-option *ngFor="let ramo of ramosNegocio" [value]="ramo.id">{{ ramo.descricao }}</mat-option>
           </mat-select>
           </mat-form-field>
         </div>      
       
         <div class="form-group-button">
-          <button mat-raised-button color="primary" [disabled]="form.invalid" type="submit">
+          <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid" type="submit">
             Salvar
           </button>
         </div>
@@ -49,41 +49,46 @@
           
     </div>
   </div>
-  
+
+  <div class="card-header-table">
+    <h4>Empresas Cadastradas</h4>
+  </div>
+ 
   <div class="card">
-    <div class="card-body">
+    <div class="card-body">      
 
       <mat-table class="table table-striped" [dataSource]="empresas">
         <ng-container matColumnDef="razaoSocial">
           <mat-header-cell *matHeaderCellDef>Razão Social</mat-header-cell>
-          <mat-cell *matCellDef="let empresas">{{ empresa.razaoSocial }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresas.razaoSocial }}</mat-cell>
         </ng-container>
-      
+        
         <ng-container matColumnDef="cnpj">
           <mat-header-cell *matHeaderCellDef>CNPJ</mat-header-cell>
-          <mat-cell *matCellDef="let empresas">{{ empresa.cnpj }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresas.cnpj }}</mat-cell>
         </ng-container>
-      
+        
         <ng-container matColumnDef="endereco">
           <mat-header-cell *matHeaderCellDef>Endereço</mat-header-cell>
-          <mat-cell *matCellDef="let empresas">{{ empresa.endereco }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresas.endereco }}</mat-cell>
         </ng-container>
-
+        
         <ng-container matColumnDef="ramo">
           <mat-header-cell *matHeaderCellDef>Ramo de negócio</mat-header-cell>
-          <mat-cell *matCellDef="let empresas">{{ empresa.ramoNegocio.descricao }}</mat-cell>
+          <mat-cell *matCellDef="let empresas">{{ empresas.ramoNegocio.descricao }}</mat-cell>
         </ng-container>
-      
+        
         <ng-container matColumnDef="acoes">
           <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
           <mat-cell *matCellDef="let empresas">
-            <button class="btn btn-primary" [routerLink]="['/empresa', empresa.id, 'editar']">Editar</button>
-            <button class="btn btn-danger" (click)="removerEmpresa(empresa)">Remover</button>
+            <button mat-button color="primary" [routerLink]="['/empresas', empresas.id]">Editar</button>
+            <button mat-button color="warn" (click)="removerEmpresa(empresas)">Remover</button>
           </mat-cell>
         </ng-container>
-      
+        
         <mat-header-row *matHeaderRowDef="['razaoSocial', 'cnpj', 'endereco', 'ramo', 'acoes']"></mat-header-row>
         <mat-row *matRowDef="let row; columns: ['razaoSocial', 'cnpj', 'endereco', 'ramo', 'acoes']"></mat-row>
+        
       </mat-table>
       
     </div>
