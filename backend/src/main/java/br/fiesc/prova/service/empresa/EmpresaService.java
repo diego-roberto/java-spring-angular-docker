@@ -44,6 +44,10 @@ public class EmpresaService {
         return ramoNegocioRepository.findAll();
     }
 
+    public List<Map<String, Object>> getEmpresasPorRamoNegocio() {
+        return empresaRepository.getEmpresasByRamoNegocio();
+    }
+
     public Empresa create(Empresa empresa) {
         return empresaRepository.save(empresa);
     }

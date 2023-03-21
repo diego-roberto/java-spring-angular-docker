@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/empresas")
@@ -23,10 +24,10 @@ public class EmpresaController {
 
     private final static String NOT_FOUND = "Empresa não encontrada.";
 
-    @GetMapping()
-    public ResponseEntity<List<Empresa>> index() {
-        List<Empresa> empresas = empresaService.findAll();
-        return new SuccessResponse<List<Empresa>>().handle(empresas, HttpStatus.OK);
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Empresa> index(@PathVariable("id") Long id) {
+        Empresa empresa = empresaService.findById(id);
+        return new SuccessResponse<Empresa>().handle(empresa, HttpStatus.OK);
     }
 
     @GetMapping("/findAll")
@@ -49,6 +50,12 @@ public class EmpresaController {
         } else {
             return ErrorResponse.handle(new String[] {NOT_FOUND}, Empresa.class, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/empresasPorRamoNegocio")
+    public ResponseEntity<?> getEmpresasByRamoNegocio() {
+        List<Map<String, Object>> response = empresaService.getEmpresasPorRamoNegocio();
+        return new SuccessResponse<List<Map<String, Object>>>().handle(response, HttpStatus.OK);
     }
 
     @GetMapping("/findEmpresasByRamoNegocioId/{ramoNegocioId}")

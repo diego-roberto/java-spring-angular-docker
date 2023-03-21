@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
@@ -15,6 +16,9 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     Empresa findByCnpj(@Param("cnpj")String cnpj, @Param("cnpjFormated") String cnpjFormated);
 
     Optional<Empresa> findById(Long id);
+
+    @Query("SELECT e.ramoNegocio.descricao as ramoNegocio, count(e) as quantidade FROM Empresa e GROUP BY e.ramoNegocio.descricao")
+    List<Map<String, Object>> getEmpresasByRamoNegocio();
 
     @Query("SELECT e FROM Empresa e WHERE e.ramoNegocio.id = :ramoNegocioId")
     List<Empresa> findByRamoNegocioId(Long ramoNegocioId);
