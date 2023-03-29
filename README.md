@@ -28,7 +28,7 @@ Para inicializar o frontend, utilize o comando:
 > npm install && ng serve 
 >
 
-Cada repositório, backend e frontend, possui um README com maiores detalhes.
+## Cada repositório, backend e frontend, possui um README com maiores detalhes.
 
 
 # Pra que serve esse projeto?
