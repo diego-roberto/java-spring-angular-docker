@@ -8,11 +8,11 @@ services:
     container_name: mariadb
     hostname: mariadb
     volumes:
-      - '/data/dev/prova-java-spring/mariadb:/var/lib/mysql:rw'
+      - '/data/dev/project-java-spring/mariadb:/var/lib/mysql:rw'
       - './mariadb/my.cnf:/etc/mysql/my.cnf'
     environment:
       SERVICE_NAME: mariadb
-      MYSQL_DATABASE: prova-java-spring_db
+      MYSQL_DATABASE: project-java-spring_db
       MYSQL_USER: project_usr
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_USER: root
@@ -27,7 +27,7 @@ services:
     labels:
       - traefik.enable=false
   backend:
-    image: 'prova-java-spring/backend:latest'
+    image: 'project-java-spring/backend:latest'
     build:
       context: ./backend
       dockerfile: docker/Dockerfile.dev
@@ -36,7 +36,7 @@ services:
     environment:
       APP_ENV: local
       BACKEND_SERVER_PORT: 8082
-      BACKEND_DB_URL: 'jdbc:mariadb://localhost:3306/prova-java-spring_db'
+      BACKEND_DB_URL: 'jdbc:mariadb://localhost:3306/project-java-spring_db'
       DB_DRIVER_CLASS: org.mariadb.jdbc.Driver
       DB_BASE_URL: 'jdbc:mariadb://localhost:3306/'
       DB_ROOT_USER: root
@@ -69,7 +69,7 @@ services:
     build:
       context: ./frontend
       dockerfile: docker/Dev.Dockerfile
-    image: 'prova-java-spring/frontend:latest'
+    image: 'project-java-spring/frontend:latest'
     container_name: frontend
     hostname: frontend
     volumes:

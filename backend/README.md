@@ -37,6 +37,6 @@ Execute os seguintes comandos dentro da pasta raiz do `backend`:
 
 Pode ser necessário criar o schema manualmente, para isto execute a query no console da base:
 
-> create schema `prova-java-spring_db`
+> create schema `project-java-spring_db`
 > 
 
