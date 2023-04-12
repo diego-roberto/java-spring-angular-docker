@@ -1,5 +1,5 @@
 # Definição do projeto
-Projeto simples para amostra. Consiste em um cadastro de empresas, demonstrando um CRUD básico e fluxo de telas entre cadastro e dashboard.
+Projeto simples para amostra. Consiste em um cadastro de empresas, demonstrando um CRUD básico e fluxo de telas entre cadastro e dashboard. </br>
 <img src="https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot"/>
 <img src="https://img.shields.io/badge/apache_maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white"/>
 <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
